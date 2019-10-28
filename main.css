@@ -75,3 +75,7 @@ button {
     border-radius: 5px;
     box-shadow: 0;
 }
+
+.location-name {
+    display: none;
+}
