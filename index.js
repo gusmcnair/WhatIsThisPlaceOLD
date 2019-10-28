@@ -18,28 +18,22 @@ function getLocation() {
         .then(response => {
             if(response.ok) {
                 return response.json();
-            } else console.log(response)
+            } else getCoordinates();
             })
         .then(responseJson => displayResults(responseJson))
         .catch(err => {
-            $(".init-form").hide();
-            $(".location-name").fadeIn(1000);
+            getCoordinates();
         });
 }
 
-function getCoordinates(locationName) {
-    console.log(fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)    )
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)
-        .then(response => {
-            if(response.ok) {
-                return response.json();
-            } else console.log("That didn't work.")
-            })
-        .then(responseJson => displayResults(responseJson))
-        .catch(err => {
-            console.log("That didn't work, either.");
-        })
-        }
+function getCoordinates() {
+    if(navigator.geolocation) {
+         let vark = navigator.geolocation.getCurrentPosition(getCoordinates);
+         console.log(vark);
+    } else {
+        console.log("it didn't work yo")
+    }
+    }
 
 
 function displayResults(responseJson){
@@ -49,3 +43,18 @@ function displayResults(responseJson){
 
 watchButton()
 watchForm();
+
+/*
+console.log(fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)    )
+fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else console.log("That didn't work.")
+        })
+    .then(responseJson => displayResults(responseJson))
+    .catch(err => {
+        console.log("That didn't work, either.");
+        */
+
+        
