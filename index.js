@@ -33,17 +33,18 @@ function getCoordinates(locationName) {
         .then(response => {
             if(response.ok) {
                 return response.json();
-            } else console.log(response)
+            } else console.log("That didn't work.")
             })
         .then(responseJson => displayResults(responseJson))
-        .catch(err =>{
-            console.log(responseJson);
+        .catch(err => {
+            console.log("That didn't work, either.");
         })
         }
 
 
 function displayResults(responseJson){
     $(".census-info").append(responseJson)
+    console.log(responseJson);
 }
 
 watchButton()
