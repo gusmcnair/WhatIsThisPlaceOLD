@@ -76,6 +76,15 @@ button {
     box-shadow: 0;
 }
 
-.location-name {
-    display: none;
+.place-name {
+    text-align: center;
+}
+
+input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.display-error {
+    color: red;
 }

@@ -14,16 +14,19 @@
         </header>
             <p>Lorem ipsum etc etc this is where text will go</p>
             <form class="init-form">
-                <button name="submit-button" id="submit-button" type="submit">What is this place?</button>
+                <button name="submit-button" id="submit-button" type="submit">Search by GPS</button>
             </form>
+            <section class="display-error">
+
+            </section>
             <section class="location-name">
-                <p>It appears that we couldn't automatically find your location. Please input your location's name below.</p>
+                <p>Or try inputting the location's name manually:</p>
                 <form class="place-name">
                     <label for="city-name">City, Village or Place Name</label>
                     <input name="city-name" id="city-name" placeholder="Madison" type="text" required><br>
                     <label for="state-name">State initials</label>
                     <input name="state-name" id="state-name" placeholder="WI" type="text" required>
-                    <button name="geocode-button" id="geocode-button" type="submit">What is this place?</button>
+                    <button name="geocode-button" id="geocode-button" type="submit">Search by text</button>
                 </form>
             </section>
             <section class="place-info">

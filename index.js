@@ -1,52 +1,65 @@
-function watchButton () {
+const coordinates = "";
+
+function watchButton() {
     $("#submit-button").on("click", event => {
         event.preventDefault();
         getLocation();
     });
 }
 
-function watchForm(){
+function watchForm() {
     $(".place-name").submit(event => {
         event.preventDefault();
         const locationName = $("#city-name").val() + "+" + $("#state-name").val()
-        getCoordinates(locationName);
-        console.log(locationName);
-    })};
+        getLocationFromText(locationName);
+    })
+};
 
 function getLocation() {
     fetch("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true")
         .then(response => {
-            if(response.ok) {
+            if (response.ok) {
                 return response.json();
-            } else getCoordinates();
-            })
+            } else {
+                console.log("Google geolocation API failed, attempting browser geolocation");
+            };
+
+        })
         .then(responseJson => displayResults(responseJson))
         .catch(err => {
+            console.log("Google geolocation API failed, attempting browser geolocation");
             getCoordinates();
         });
 }
 
 function getCoordinates() {
-    if(navigator.geolocation) {
-         let vark = navigator.geolocation.getCurrentPosition(getCoordinates);
-         console.log(vark);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
     } else {
-        console.log("it didn't work yo")
+        console.log("Browser geolocation failed, displaying error message");
+        $(".display-error").append("Geolocation for this device has failed. Try inputting your location's name below!")
     }
-    }
-
-
-function displayResults(responseJson){
-    $(".census-info").append(responseJson)
-    console.log(responseJson);
 }
 
-watchButton()
-watchForm();
+function showPosition(position) {
+    if (typeof position.coords.latitude != "number") { console.log("Browser geolocation failed, displaying error message");
+    $(".display-error").append("Geolocation for this device has failed. Try inputting your location's name below!") }
+    else { console.log(position.coords.latitude, position.coords.longitude) };
+    //getCensusData(position.coords.latitude, position.coords.longitude)
+    //getFourSquareData(position.coords.latitude, position.coords.longitude);
+}
 
-/*
-console.log(fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)    )
-fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)
+
+function displayResults(responseJson) {
+    let latitude = responseJson.results[0].geometry.location.lat;
+    let longitude = responseJson.results[0].geometry.location.lng;
+    console.log(latitude, longitude);
+    //getCensusData(latitude, longitude)
+    //getFourSquareData(latitude, longitude);
+}
+
+function getLocationFromText(locationName) {
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}&key=AIzaSyAbOJBsHu8NRJnwsjAK_UONAWnDd2eh6LA&considerIp=true`)
     .then(response => {
         if(response.ok) {
             return response.json();
@@ -54,7 +67,14 @@ fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${locationName}
         })
     .then(responseJson => displayResults(responseJson))
     .catch(err => {
-        console.log("That didn't work, either.");
-        */
+        console.log("That didn't work, either.")
+            })}
 
-        
+
+function getCensusData(){};
+
+function getFourSquareData(){};    
+            
+watchButton();
+
+watchForm();
