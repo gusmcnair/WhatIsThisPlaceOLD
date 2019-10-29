@@ -44,8 +44,8 @@ function getCoordinates() {
 function showPosition(position) {
     if (typeof position.coords.latitude != "number") { console.log("Browser geolocation failed, displaying error message");
     $(".display-error").append("Geolocation for this device has failed. Try inputting your location's name below!") }
-    else { console.log(position.coords.latitude, position.coords.longitude) };
-    //getCensusData(position.coords.latitude, position.coords.longitude)
+    else { console.log(position.coords.latitude, position.coords.longitude) 
+    getLocationName(position.coords.latitude, position.coords.longitude) };
     //getFourSquareData(position.coords.latitude, position.coords.longitude);
 }
 
@@ -54,7 +54,7 @@ function displayResults(responseJson) {
     let latitude = responseJson.results[0].geometry.location.lat;
     let longitude = responseJson.results[0].geometry.location.lng;
     console.log(latitude, longitude);
-    //getCensusData(latitude, longitude)
+    getCensusData(latitude, longitude)
     //getFourSquareData(latitude, longitude);
 }
 
@@ -71,9 +71,27 @@ function getLocationFromText(locationName) {
             })}
 
 
-function getCensusData(){};
+function getLocationName(lat, long){
+    fetch(`https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=${long}&y=${lat}&benchmark=Public_AR_Census2010&vintage=Census2010_Census2010&format=json&key=dbaa8376c3814b67ddc36b61de2290ee531ffe43`)
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else console.log("That didn't work.")
+    })
+    .then(responseJson => censusDisplay(responseJson))
+    .catch(err => {
+        console.log("That didn't work, either.")
+    })
+};
 
-function getFourSquareData(){};    
+function censusDisplay(responseJson){
+    console.log(responseJson);
+}
+
+//function getFourSquareData(lat, long){};    
+
+fetch(`https://api.census.gov/data/2010/dec/sf1?get=STNAME,POP&DATE_=7&for=state:*`)
+
             
 watchButton();
 
