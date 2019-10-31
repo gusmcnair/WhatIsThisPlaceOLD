@@ -64,7 +64,6 @@ h1 {
 
 p {
     padding: 20px;
-    text-align: center;
 }
 
 button {
@@ -87,4 +86,30 @@ input {
 
 .display-error {
     color: red;
+}
+
+.foursquare-info {
+    display: none;
+}
+
+.census-info {
+    display: none;
+}
+
+li {
+    padding-top: 15px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    padding-top: 15px;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+.center-text {
+    text-align: center;
 }
